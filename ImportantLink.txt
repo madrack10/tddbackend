@@ -1,0 +1,3 @@
+#DJANGO ALLAUTH LINK
+https://github.com/pennersr/django-allauth/blob/master/allauth/socialaccount/models.py
+https://wsvincent.com/django-allauth-tutorial/
