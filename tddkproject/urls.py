@@ -20,17 +20,30 @@ from django.conf.urls import url, include
 from rest_framework import routers
 #from tddkApi import views
 from django.conf import settings
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
+
+
+
+from rest_auth.views import (
+    LoginView, LogoutView, UserDetailsView, PasswordChangeView,
+    PasswordResetView, PasswordResetConfirmView
+)
+
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'tddkApi/v1/', include('tddkApi.urls')),
     url(r'^rest-auth/', include('rest_auth.urls')),
-    #url(r'^account/', include('allauth.urls')),
-    url(r'^rest-auth/registration/',include('rest_auth.registration.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^auth/', include('rest_framework_social_oauth2.urls')),
-    #url(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login')
-    url(r'^oauth/', include('oauth2_provider.urls', namespace='oauth2_provider'))
+    url(r'^oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    
+    path(r'api-token-auth/', obtain_jwt_token),
+    path(r'api-token-refresh/', refresh_jwt_token),
+
+    # url(r'^login/$', LoginView.as_view(), name='rest_login'),
+    # url(r'^logout/$', LogoutView.as_view(), name='rest_logout'),
 
 ]
 

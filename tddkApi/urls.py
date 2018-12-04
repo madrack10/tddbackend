@@ -37,7 +37,7 @@ router = DefaultRouter()
 
 urlpatterns = [
     # url(r'^user', include(router.urls)),
-    url(r'^users', include(user_urls)),
-    url(r'^offres', include(offre_urls)),
-    url(r'^domaines', include(domaine_urls)),
+    url(r'^users/', include(user_urls)),
+    url(r'^offres/', include(offre_urls)),
+    url(r'^domaines/', include(domaine_urls)),
 ]
