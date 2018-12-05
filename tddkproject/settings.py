@@ -48,6 +48,22 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
         'rest_framework_social_oauth2.authentication.SocialAuthentication',
+
+    ),
+}
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+
+        
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
     ),
 }
 
@@ -114,6 +130,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Added for heroku deployment
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'tddkproject.urls'
@@ -202,36 +221,21 @@ SITE_ID = 1
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username','email'
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.SessionAuthentication',
-#         'rest_framework.authentication.TokenAuthentication',
-#     )
-# }
-
-
+# /rest-auth/password/change/ (POST) Utiliser son ancien mdp
+OLD_PASSWORD_FIELD_ENABLED = True
+# Garder l'utilisateur connecté apres un chgmt de mdp
+LOGOUT_ON_PASSWORD_CHANGE = False
 
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
 
-        
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-}
 
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
 }
+
+REST_USE_JWT = True
