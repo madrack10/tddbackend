@@ -1,1 +1,1 @@
-web: gunicorn tddbackend.wsgi
+web: gunicorn tddkproject.wsgi --log-file -
